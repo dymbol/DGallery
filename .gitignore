@@ -1,0 +1,9 @@
+*.sqlite3
+*,sqlite
+DymbolGallery/photos/static/images/albums/*
+*.exe
+*.test
+*.prof
+*.pyc
+*.sqlite
+*.log
