@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title %}Witaj{% endblock %}
+{% block primary %}
+<section id="gallery">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <p class="h4">Nazwa albumu: {{album.name}}</p>
+                <a href="{% url 'listAlbums' back_url %}">
+                    <button type="button" class="btn btn-primary">Lista albumów</button>
+                </a>
+                <button type="button" id="dupka" class="btn btn-primary">zobacz</button>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px;">
+            <div class="col-lg-8 mx-auto">
+                <ul id="lightgallery" class="list-unstyled row">
+                    {% for photo in photos_data %}
+                        <li class="col-xs-6 col-sm-4 col-md-3"
+                            data-responsive="
+                              ../image/{{album.id}}/{{photo.name}}-375.{{photo.type}}  375,
+                              ../image/{{album.id}}/{{photo.name}}-480.{{photo.type}} 480,
+                              ../image/{{album.id}}/{{photo.name}}.{{photo.type}} 800"
+                            data-src="../image/{{album.id}}/{{photo.name}}-1600.{{photo.type}}"
+                            data-sub-html="<h4>{{photo.name}}</h4><h5>{{photo.desc}}</h5>"
+                            data-pinterest-text="Pin it1"
+                            data-tweet-text="share on twitter 1">
+                            <a href="">
+                                    <img style="position: relative;
+                                            float: left;
+                                            width:  300px;
+                                            height: 300px;
+                                            background-position: 50% 50%;
+                                            background-repeat:   no-repeat;
+                                            background-size:     cover;"
+                                        class="img-thumbnail " src="../image/{{album.id}}/thumb-{{photo.name}}.{{photo.type}}" alt="Thumb-{{ photo.name }}">
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/combine/npm/lightgallery,npm/lg-autoplay,npm/lg-fullscreen,npm/lg-hash,npm/lg-pager,npm/lg-share,npm/lg-thumbnail,npm/lg-video,npm/lg-zoom"></script>
+            <script>
+                //$('#lightgallery').lightGallery({
+                //    thumbnail:true
+                //})
+                $('#dupka').on('click', function() {
+                    console.log("ddwd");
+                    console.log(this);
+                    $(this).lightGallery({
+                        dynamic: true,
+                        dynamicEl: [
+                            {% for photo in photos_data %}
+                                {
+                                "src": '../image/{{album.id}}/{{photo.name}}-1600.{{photo.type}}',
+                                'thumb': '../image/{{album.id}}/thumb-{{photo.name}}.{{photo.type}}',
+                                'subHtml': '<h4>{{photo.name}}</h4><h5>{{photo.desc}}</h5>'
+                                },
+                            {% endfor %}
+
+                        ]
+                    })
+
+                });
+
+            </script>
+
+
+        </div>
+    </div>
+</section>
+{% endblock %}

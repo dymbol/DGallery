@@ -1,0 +1,100 @@
+
+.button_glow {
+  background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 5px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 12px;
+  padding: 3px 8px;
+  text-align: center;
+  text-decoration: none;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; -moz-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+
+@keyframes glowing {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+
+.button_glow {
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+
+
+
+
+
+
+@-webkit-keyframes spinner {
+   from { -webkit-transform: rotateY(0deg);    }
+   to   { -webkit-transform: rotateY(-360deg); }
+ }
+
+ /* all other browsers */
+ @keyframes spinner {
+   from {
+     -moz-transform: rotateY(0deg);
+     -ms-transform: rotateY(0deg);
+     transform: rotateY(0deg);
+   }
+   to {
+     -moz-transform: rotateY(-360deg);
+     -ms-transform: rotateY(-360deg);
+     transform: rotateY(-360deg);
+   }
+ }
+
+ #stage {
+   margin: 1em auto;
+   -webkit-perspective: 1200px;
+   -moz-perspective: 1200px;
+   -ms-perspective: 1200px;
+   perspective: 1200px;
+ }
+
+ #spinner {
+     -webkit-animation-name: spinner;
+     -webkit-animation-timing-function: linear;
+     -webkit-animation-iteration-count: infinite;
+     -webkit-animation-duration: 6s;
+
+     animation-name: spinner;
+     animation-timing-function: linear;
+     animation-iteration-count: infinite;
+     animation-duration: 6s;
+
+     -webkit-transform-style: preserve-3d;
+     -moz-transform-style: preserve-3d;
+     -ms-transform-style: preserve-3d;
+     transform-style: preserve-3d;
+   }
+
+   #spinner:hover {
+     -webkit-animation-play-state: paused;
+     animation-play-state: paused;
+   }
+

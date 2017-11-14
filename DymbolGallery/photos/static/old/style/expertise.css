@@ -1,0 +1,52 @@
+body {
+    font-family: 'Courier';
+    font-size:small;
+}
+.header
+{
+    font-size:xx-small;
+}
+
+.data-table {
+    border: 1px solid gray;
+}
+
+.data-table td {
+    text-align: center;
+    background: #f1f1f1;
+    border: 1px solid gray;
+}
+
+.data-table th {
+    background: #c8c8c8;
+    text-align: center;
+}
+
+.data-table tr {
+    text-align: center;
+    border: 1px solid gray;
+}
+
+.ramka {
+    border: solid 1px;
+    border-color: gray;
+    padding: 5px;
+
+    color: #232323;
+	margin: 0 0 0.75em 0;
+}
+
+.podpis {
+    border: 1px solid gray;
+    font-size: small;
+    float: right;
+    text-align:center;
+    padding: 5px;
+}
+
+.footer
+{
+    font-size:xx-small;
+    position: absolute;
+    bottom: 1%;
+}

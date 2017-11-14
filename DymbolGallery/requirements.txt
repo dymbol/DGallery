@@ -1,0 +1,7 @@
+Django==1.11.3
+django-sendfile==0.3.11
+ExifRead==2.1.2
+Pillow==3.1.2
+uwsgi
+setuptools
+python-resize-image
