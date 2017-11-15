@@ -1,17 +1,40 @@
 ---
-- name: Send source code
+- name: DGallery install playbook
   hosts: DGallery
   remote_user: "{{run_user}}"
   become: yes
   become_method: sudo
+  vars:
+    albums_dir: "/home/dymbol/DGallery_albums"
+    DGallery_dir: "/home/dymbol/DGallery"
+    run_user: "dymbol"
+    run_group: "dymbol"
 
   tasks:
-    - name: set facts
-      set_fact:
-        albums_dir: "/home/dymbol/DGallery_albums"
-        DGallery_dir: "/home/dymbol/DGallery"
-        run_user: "dymbol"
-        run_group: "dymbol"
+    - name: Install required packages
+      dnf:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - jbigkit-libs
+        - lcms2
+        - lcms2-devel
+        - libimagequant
+        - libjpeg-turbo
+        - libjpeg-turbo-devel
+        - libtiff
+        - libtiff-devel
+        - libwebp
+        - openjpeg2
+        - openjpeg2-devel
+        - python2-olefile
+        - zlib
+        - zlib-devel
+        - gcc
+        - redhat-rpm-config
+        - python2-devel
+      when: ansible_distribution == "Fedora" and ansible_distribution_major_version > '25'
+
 
     - name: Disabling SELINUX
       selinux:
@@ -31,6 +54,9 @@
         group: "{{run_group}}"
         mode: 0644
 
+    - name: Creates DGallery directory
+      file: path="{{ DGallery_dir }}" state=directory
+
     - name: Extract archive
       unarchive:
         src: /tmp/DGallery_code.tgz
@@ -41,7 +67,7 @@
     - name: Configure DGallery
       template:
         src: templates/settings.j2
-        dest: "{{ DGallery_dir }}/DymbolGallery/DymbolGallery/settings.py"
+        dest: "{{ DGallery_dir }}/DymbolGallery/settings.py"
 
     - name: Creates albums directory
       file: path="{{ albums_dir }}" state=directory
@@ -53,5 +79,5 @@
 
 
     - name: install Python requierments
-      command: 'pip install -r /home/dymbol/GIT/DGallery/DymbolGallery/requirements.txt'
+      command: 'pip install -r "{{ DGallery_dir }}"/requirements.txt'
       become_method: sudo
