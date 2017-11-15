@@ -126,6 +126,24 @@ class Command(BaseCommand):
                     elif extension.lower() in VideoExtensions:  # if image is in supported videos
                         print "FoundVideo: {}".format(file)
 
+                        #convert wideo to some browser-friendly format
+
+                        #save video to
+                        #out_path = output_dir + "/" + "1600" + inputExtensionLower
+
+                        #create thumnail from wideo with name 'thumb-filename.jpg'
+                        #out_path = output_dir + "/" + "thumb-"" + inputExtensionLower
+
+
+                        # wideo_new = Photo()
+                        # wideo_new.album = album
+                        # wideo_new.name = basename
+                        # wideo_new.type = extension.lower()[1:]
+                        # verbose("Creating photo {}".format(photo_new.name))
+                        # wideo_new.save()
+
+
+
                 #tell threading to wait for all threads to finish
                 for watek in threads_list:
                     watek.join()
@@ -140,5 +158,3 @@ class Command(BaseCommand):
                     album.save()
 
                 print "Album {} created".format(album.name)
-
-

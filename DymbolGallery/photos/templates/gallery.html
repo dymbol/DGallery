@@ -25,11 +25,12 @@
                     $(this).lightGallery({
                         dynamic: true,
                         thumbnail:true,
+                        videojs: true,
                         dynamicEl: [
                             {% for photo in photos_data %}
                                 {
                                 "src": '../image/{{album.id}}/{{photo.name}}-1600.{{photo.type}}',
-                                'thumb': '../image/{{album.id}}/thumb-{{photo.name}}.{{photo.type}}',
+                                'thumb': '../image/{{album.id}}/thumb-{{photo.name}}.jpg',
                                 'subHtml': '<h4>{{photo.name}}</h4><h5>{{photo.desc}}</h5>'
                                 },
                             {% endfor %}
