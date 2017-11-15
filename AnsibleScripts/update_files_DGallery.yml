@@ -11,40 +11,7 @@
     run_group: "dymbol"
 
   tasks:
-    - name: Install required packages
-      dnf:
-        name: "{{ item }}"
-        state: present
-      with_items:
-        - jbigkit-libs
-        - lcms2
-        - lcms2-devel
-        - libimagequant
-        - libjpeg-turbo
-        - libjpeg-turbo-devel
-        - libtiff
-        - libtiff-devel
-        - libwebp
-        - openjpeg2
-        - openjpeg2-devel
-        - python2-olefile
-        - zlib
-        - zlib-devel
-        - gcc
-        - redhat-rpm-config
-        - python2-devel
-      when: ansible_distribution == "Fedora" and ansible_distribution_major_version > '25'
 
-
-    - name: Disabling SELINUX
-      selinux:
-        state: disabled
-
-    - name: disable firewalld
-      systemd:
-        name: firewalld
-        enabled: no
-        state: stopped
 
     - name: Send compressed code
       copy:
@@ -53,9 +20,6 @@
         owner: "{{run_user}}"
         group: "{{run_group}}"
         mode: 0644
-
-    - name: Creates DGallery directory
-      file: path="{{ DGallery_dir }}" state=directory
 
     - name: Extract archive
       unarchive:
