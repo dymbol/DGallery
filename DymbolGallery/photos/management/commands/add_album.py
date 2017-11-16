@@ -11,6 +11,7 @@ import sys
 import json
 import exifread
 import threading
+from subprocess import call
 
 
 
@@ -84,6 +85,15 @@ class Command(BaseCommand):
                                 out_path = output_dir + "/" + img_size + inputExtensionLower
                                 output.save(out_path, image2.format)
 
+                def convert_video(video, baseName, inputExtensionLower):
+                    video_format="webm"
+                    out_path = output_dir + "/" + baseName+"."+video_format
+                    out_path_thumb = output_dir + "/thumb-" + baseName+".jpg"
+                    call(["ffmpeg", "-i", video, "-c:v", "libvpx", "-b:v", "1M", "-c:a", "libvorbis", out_path])
+                    #create thumbnail
+                    call(["ffmpeg", "-i", video, "-ss", "00:00:14.435", "-vframes", "1", out_path_thumb])
+
+
                 def check_if_can_start_thread():
                     if threading.activeCount() >= max_threads:
                         time.sleep(0.1)
@@ -126,22 +136,14 @@ class Command(BaseCommand):
                     elif extension.lower() in VideoExtensions:  # if image is in supported videos
                         print "FoundVideo: {}".format(file)
 
-                        #convert wideo to some browser-friendly format
-
-                        #save video to
-                        #ffmpeg -i rajsa.mp4 -c:v libvpx -b:v 1M -c:a libvorbis rajsa.webm
-                        #out_path = output_dir + "/" + "1600" + inputExtensionLower
-
-                        #create thumnail from wideo with name 'thumb-filename.jpg'
-                        #out_path = output_dir + "/" + "thumb-"" + inputExtensionLower
-
-
-                        # wideo_new = Photo()
-                        # wideo_new.album = album
-                        # wideo_new.name = basename
-                        # wideo_new.type = extension.lower()[1:]
-                        # verbose("Creating photo {}".format(photo_new.name))
-                        # wideo_new.save()
+                        #convert wideo to some browser-friendly(webm) format and create thumnail
+                        convert_video(file, basename, extension.lower())
+                        wideo_new = Photo()
+                        wideo_new.album = album
+                        wideo_new.name = basename
+                        wideo_new.type = "webm"
+                        verbose("Creating video {}".format(photo_new.name))
+                        wideo_new.save()
 
 
 
