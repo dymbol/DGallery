@@ -12,6 +12,7 @@ import json
 import exifread
 import threading
 from subprocess import call
+import shutil
 
 
 
@@ -19,7 +20,8 @@ def verbose(text):
     if settings.DEBUG == True:
         print text
 ImageExtensions=[".jpg", ".jpeg", ".png", ".gif"]
-VideoExtensions=[".avi", ".mpg", ".mpeg", ".mov", ".mp4"]
+VideoExtensions=[".avi", ".mpg", ".mpeg", ".mov", ".mp4", ".webm"]
+NotProcessedFiles=[]
 
 
 class Command(BaseCommand):
@@ -89,9 +91,10 @@ class Command(BaseCommand):
                     video_format="webm"
                     out_path = output_dir + "/" + baseName+"."+video_format
                     out_path_thumb = output_dir + "/thumb-" + baseName+".jpg"
-                    call(["ffmpeg", "-i", video, "-c:v", "libvpx", "-b:v", "1M", "-c:a", "libvorbis", out_path])
+                    input_file = SrcAlbumDir+"/"+video
+                    call([settings.FFMPEG, "-i", input_file, "-c:v", "libvpx", "-b:v", "1M", "-c:a", "libvorbis", out_path])
                     #create thumbnail
-                    call(["ffmpeg", "-i", video, "-ss", "00:00:14.435", "-vframes", "1", out_path_thumb])
+                    call([settings.FFMPEG, "-i", input_file, "-ss", "00:00:2.435", "-vframes", "1", out_path_thumb])
 
 
                 def check_if_can_start_thread():
@@ -134,16 +137,23 @@ class Command(BaseCommand):
                         photo_new.save()
 
                     elif extension.lower() in VideoExtensions:  # if image is in supported videos
-                        print "FoundVideo: {}".format(file)
+                        verbose("FoundVideo: {}".format(file))
 
                         #convert wideo to some browser-friendly(webm) format and create thumnail
-                        convert_video(file, basename, extension.lower())
-                        wideo_new = Photo()
-                        wideo_new.album = album
-                        wideo_new.name = basename
-                        wideo_new.type = "webm"
-                        verbose("Creating video {}".format(photo_new.name))
-                        wideo_new.save()
+                        if extension.lower() is not '.webm':
+                            convert_video(file, basename, extension.lower())
+                            wideo_new = Photo()
+                            wideo_new.album = album
+                            wideo_new.name = basename
+                            wideo_new.type = "webm"
+                            verbose("Creating video {}".format(wideo_new.name))
+                            wideo_new.save()
+                        else:
+                            verbose("Found webm file. Copying file")
+                            shutil.copyfile(SrcAlbumDir+"/"+file, output_dir+"/"+file)
+
+                    else:
+                        NotProcessedFiles.append(file)
 
 
 
@@ -161,3 +171,4 @@ class Command(BaseCommand):
                     album.save()
 
                 print "Album {} created".format(album.name)
+                print "Files that were not processed: {}".format(NotProcessedFiles)

@@ -80,6 +80,8 @@
 
     - name: Creates albums directory
       file: path="{{ albums_dir }}" state=directory
+      owner: "{{run_user}}"
+      group: "{{run_group}}"
 
     - name: install Python requierments
       command: 'pip install -r "{{ DGallery_dir }}"/DymbolGallery/requirements.txt'
