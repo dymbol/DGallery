@@ -11,8 +11,7 @@
     run_group: "dymbol"
 
   tasks:
-
-
+    
     - name: Send compressed code
       copy:
         src: /tmp/DGallery_code.tgz

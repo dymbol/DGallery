@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(r'^login/$', views.login_user, name='login_user'),
+    url(r'^accounts/login/$', views.login_user, name='login_user'),
+
     url(r'^logoutuser/$', views.logoutuser, name='logoutuser'),
 
     url(r'^$', views.index, name='index'),

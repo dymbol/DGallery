@@ -129,6 +129,7 @@ class Command(BaseCommand):
                         #convert wideo to some browser-friendly format
 
                         #save video to
+                        #ffmpeg -i rajsa.mp4 -c:v libvpx -b:v 1M -c:a libvorbis rajsa.webm
                         #out_path = output_dir + "/" + "1600" + inputExtensionLower
 
                         #create thumnail from wideo with name 'thumb-filename.jpg'

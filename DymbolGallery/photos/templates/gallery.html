@@ -28,11 +28,24 @@
                         videojs: true,
                         dynamicEl: [
                             {% for photo in photos_data %}
+
+
+                                {% if photo.type == "webm" %}
+
+                                  {
+                                    "html": '<video class="lg-video-object lg-html5" controls preload="none"><source src="../image/{{album.id}}/{{photo.name}}.{{photo.type}}" type="video/webm">Your browser does not support HTML5 video</video>',
+                                    'thumb': '../image/{{album.id}}/thumb-{{photo.name}}.jpg',
+                                    'subHtml': '<h4>{{photo.name}}</h4><h5>{{photo.desc}}</h5>'
+                                  },
+                                {% else %}
                                 {
-                                "src": '../image/{{album.id}}/{{photo.name}}-1600.{{photo.type}}',
-                                'thumb': '../image/{{album.id}}/thumb-{{photo.name}}.jpg',
-                                'subHtml': '<h4>{{photo.name}}</h4><h5>{{photo.desc}}</h5>'
+                                  "src": '../image/{{album.id}}/{{photo.name}}-1600.{{photo.type}}',
+                                  'thumb': '../image/{{album.id}}/thumb-{{photo.name}}.{{photo.type}}',
+                                  'subHtml': '<h4>{{photo.name}}</h4><h5>{{photo.desc}}</h5>'
                                 },
+                                {% endif %}
+
+
                             {% endfor %}
 
                         ]

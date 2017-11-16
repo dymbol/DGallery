@@ -69,7 +69,7 @@ def index(request):
 
     return render(request, 'index.html', context)
 
-
+@login_required
 def listAlbums(request, year):
     context = {}
     albums = []
@@ -89,7 +89,7 @@ def listAlbums(request, year):
         context["albums"] = albums
     return render(request, 'albums_list.html', context)
 
-
+@login_required
 def servealbum(request, Album_id):
     context = {}
     album = Album.objects.filter(id=Album_id)
@@ -115,4 +115,3 @@ def retrieve_photo(request, album_id, photo_name ):
     #response['content-type'] # We'll let the web server guess this.
     #response['X-Sendfile'] = abs_filename
     #return response
-
