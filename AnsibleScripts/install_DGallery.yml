@@ -43,6 +43,16 @@
         - python2-devel
         - ffmpeg
       when: ansible_distribution == "Fedora" and ansible_distribution_major_version > '25'
+      
+    - name: Install required packages
+      dnf:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - libjpeg-dev
+        - python2-devel 
+        - gcc
+      when: ansible_distribution == "Debian"
 
 
     - name: Disabling SELINUX
