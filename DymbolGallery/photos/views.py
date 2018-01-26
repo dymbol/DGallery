@@ -25,7 +25,6 @@ def login_user(request):
                 CurrentUserProfile = UserProfile.objects.get(phone1=phoneno)
             except:
                 CurrentUserProfile = None
-            print CurrentUserProfile
             if CurrentUserProfile is not None:
                 if CurrentUserProfile.user.is_active:
                     login(request, CurrentUserProfile.user)

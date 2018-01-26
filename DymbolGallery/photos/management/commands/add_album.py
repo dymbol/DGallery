@@ -123,8 +123,9 @@ class Command(BaseCommand):
                         if Command.exif_data["read"] == False:  #get creation date if not read before
                             with open(SrcAlbumDir + "/" + file, 'rb') as img:
                                 tags = exifread.process_file(img)
-                                Command.exif_data["creation_date"] = datetime.datetime.strptime(str(tags["EXIF DateTimeOriginal"]), '%Y:%m:%d %H:%M:%S')
-                                Command.exif_data["read"] = True
+                                if "EXIF DateTimeOriginal" in tags:
+                                    Command.exif_data["creation_date"] = datetime.datetime.strptime(str(tags["EXIF DateTimeOriginal"]), '%Y:%m:%d %H:%M:%S')
+                                    Command.exif_data["read"] = True
                         watek = threading.Thread(target=resize_image, args=(file, index, imagesCount, basename, extension.lower())) #resize image
                         watek.setName(file)
                         check_if_can_start_thread()
