@@ -80,7 +80,7 @@ def listAlbums(request, year):
         # get albums list for that user
         albumsgroups = AlbumGroup.objects.filter(group__name=request.user.groups.values_list('name', flat=True)[0])
         MyAlbumGroup = albumsgroups[0]
-        for album in MyAlbumGroup.album.all().order_by('creation_date'):
+        for album in MyAlbumGroup.album.all().order_by('-creation_date'):
             if album.creation_date is not None and str(album.creation_date.year) == str(year):
                 albums.append(album)
 
