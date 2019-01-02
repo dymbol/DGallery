@@ -75,13 +75,12 @@ def listAlbums(request, year):
 
     if request.user.groups.values_list('name', flat=True).count() == 0:
         # user doesn't belong to any group
-        print "User {} doesn't belong to any group".format(request.user.username)
+        print("User {} doesn't belong to any group".format(request.user.username))
     else:
         # get albums list for that user
         albumsgroups = AlbumGroup.objects.filter(group__name=request.user.groups.values_list('name', flat=True)[0])
         MyAlbumGroup = albumsgroups[0]
-        for album in MyAlbumGroup.album.all().order_by('-creation_date'):
-            print album
+        for album in MyAlbumGroup.album.all().order_by('creation_date'):
             if album.creation_date is not None and str(album.creation_date.year) == str(year):
                 albums.append(album)
 
