@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title %}Witaj{% endblock %}
+{% block primary %}
+<section id="gallery">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <p class="h4">Nazwa albumu: {{album.name}}</p>
+                <a href="{% url 'listAlbums' back_url %}">
+                    <button type="button" class="btn btn-primary">Wróc do listy albumów</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px;">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/combine/npm/lightgallery,npm/lg-autoplay,npm/lg-fullscreen,npm/lg-hash,npm/lg-pager,npm/lg-share,npm/lg-thumbnail,npm/lg-video,npm/lg-zoom"></script>
+            <script>
+                //$('#lightgallery').lightGallery({
+                //    thumbnail:true
+                //})
+
+                    $(this).lightGallery({
+                        dynamic: true,
+                        thumbnail:true,
+                        videojs: true,
+                        dynamicEl: [
+                            {% for photo in photos_data %}
+
+
+                                {% if photo.type == "webm" %}
+
+                                  {
+                                    "html": '<video class="lg-video-object lg-html5" controls preload="none"><source src="../image/{{album.id}}/{{photo.name}}.{{photo.type}}" type="video/webm">Your browser does not support HTML5 video</video>',
+                                    'thumb': '../image/{{album.id}}/thumb-{{photo.name}}.jpg',
+                                    'subHtml': '<h4>{{photo.name}}</h4><h5>{{photo.desc}}</h5>'
+                                  },
+                                {% else %}
+                                {
+                                  "src": '../image/{{album.id}}/{{photo.name}}-1600.{{photo.type}}',
+                                  'thumb': '../image/{{album.id}}/thumb-{{photo.name}}.{{photo.type}}',
+                                  'subHtml': '<h4>{{photo.name}}</h4><h5>{{photo.desc}}</h5>'
+                                },
+                                {% endif %}
+
+
+                            {% endfor %}
+
+                        ]
+                    })
+
+
+            </script>
+
+
+        </div>
+    </div>
+</section>
+{% endblock %}
