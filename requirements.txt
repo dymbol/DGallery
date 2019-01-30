@@ -6,3 +6,4 @@ Pillow==5.2.0
 uwsgi
 setuptools
 python-resize-image
+mysql-python
