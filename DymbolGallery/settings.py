@@ -134,5 +134,5 @@ SITE_URL = os.environ.get('SITE_URL')
 #max threads for image import script (manage.py add_album)
 II_MAX_THREADS=4
 
-LOGIN_URL='/login'
+LOGIN_URL='/photos/accounts/login'
 FFMPEG='/usr/bin/ffmpeg'
