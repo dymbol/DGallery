@@ -29,8 +29,8 @@ def login_user(request):
                 if CurrentUserProfile.user.is_active:
                     login(request, CurrentUserProfile.user)
                     messages.info(request, "{0},\n zostałeś zalogowany".format(CurrentUserProfile.user.username))
-                    if request.GET.get('next') is not None:
-                        return redirect(self.request.GET.get('next'))
+                    if 'next' is in request.GET:
+                        return redirect(request.GET.get('next'))
                     else:
                         return redirect('index')
                 else:
