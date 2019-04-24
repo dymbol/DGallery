@@ -29,7 +29,10 @@ def login_user(request):
                 if CurrentUserProfile.user.is_active:
                     login(request, CurrentUserProfile.user)
                     messages.info(request, "{0},\n zostałeś zalogowany".format(CurrentUserProfile.user.username))
-                    return redirect('index')
+                    if self.request.GET.get('next') is not None:
+                        return redirect(self.request.GET.get('next'))
+                    else
+                        return redirect('index')
                 else:
                     # Return a 'disabled account' error message
                     messages.error(request, "{0},\n Konto wyłączone")
