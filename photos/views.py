@@ -31,7 +31,7 @@ def login_user(request):
                     messages.info(request, "{0},\n zostałeś zalogowany".format(CurrentUserProfile.user.username))
                     if request.GET.get('next') is not None:
                         return redirect(self.request.GET.get('next'))
-                    else
+                    else:
                         return redirect('index')
                 else:
                     # Return a 'disabled account' error message
