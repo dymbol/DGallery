@@ -20,7 +20,7 @@ def login_user(request):
     if request.method == "POST":
         phoneno = request.POST['phoneno']
         if phoneno.isdigit() is True and len(phoneno) < 10:
-            #phone no is correct enough
+            #phone number is correct enough
             try:
                 CurrentUserProfile = UserProfile.objects.get(phone1=phoneno)
             except:
@@ -29,7 +29,7 @@ def login_user(request):
                 if CurrentUserProfile.user.is_active:
                     login(request, CurrentUserProfile.user)
                     messages.info(request, "{0},\n zostałeś zalogowany".format(CurrentUserProfile.user.username))
-                    if request.GET['next'] is not None:
+                    if 'next' in request.GET.keys() and request.GET['next'] is not None:
                         return redirect(request.GET['next'])
                     else:
                         return redirect('index')
