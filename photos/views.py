@@ -12,6 +12,8 @@ from django.http import HttpRequest
 from django.db.models import Count
 from django.http import HttpResponse
 from sendfile import sendfile
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 
 
@@ -116,3 +118,13 @@ def retrieve_photo(request, album_id, photo_name ):
     #response['content-type'] # We'll let the web server guess this.
     #response['X-Sendfile'] = abs_filename
     #return response
+
+
+@csrf_exempt
+def TestConnection(request):
+    try:
+        Photo.objects.count()
+        return JsonResponse({'status': "database connection ok"})
+    except:
+        print("Błąd połączenia z bazą danych")
+        return JsonResponse({'status': "database connection error"})
